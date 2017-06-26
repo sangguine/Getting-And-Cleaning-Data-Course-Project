@@ -38,7 +38,7 @@ names(y_test) <- c("Activity_Num", "Activity")
 names(subject_test) <- "Subject"
 
 # Column bind 3 data sets
-test_data <- cbind(as.data.table(subject_test), y_test, X_test)
+test_data <- cbind(as.data.table(subject_test), y_test, mean_std_measurements_test)
 
 # Load and process train data.
 X_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
@@ -53,7 +53,7 @@ names(y_train) <- c("Activity_Num", "Activity")
 names(subject_train) <- "Subject"
 
 # Column bind data
-train_data <- cbind(as.data.table(subject_train), y_train, X_train)
+train_data <- cbind(as.data.table(subject_train), y_train, mean_std_measurements_train)
 
 # Merge the two data sets
 data <- rbind(test_data, train_data)
