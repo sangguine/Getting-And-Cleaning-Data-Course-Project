@@ -26,16 +26,16 @@ y_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
 subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
 # Process x_test data
-names(X_test) = features
+names(X_test) <- features
 mean_std_measurements_logic <- grepl("mean|std", features)
-mean_std_measurements_test = X_test[,mean_std_measurements_logic]
+mean_std_measurements_test <- X_test[,mean_std_measurements_logic]
 
 # Process y_test data
-y_test[,2] = activity_labels[y_test[,1]]
-names(y_test) = c("Activity_Num", "Activity")
+y_test[,2] <- activity_labels[y_test[,1]]
+names(y_test) <- c("Activity_Num", "Activity")
 
 # Process subject_test data
-names(subject_test) = "Subject"
+names(subject_test) <- "Subject"
 
 # Column bind 3 data sets
 test_data <- cbind(as.data.table(subject_test), y_test, X_test)
@@ -46,23 +46,23 @@ y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
 # Process x_train data
-names(X_train) = features
-mean_std_measurements_train = X_train[,mean_std_measurements_logic]
-y_train[,2] = activity_labels[y_train[,1]]
-names(y_train) = c("Activity_Num", "Activity")
-names(subject_train) = "Subject"
+names(X_train) <- features
+mean_std_measurements_train <- X_train[,mean_std_measurements_logic]
+y_train[,2] <- activity_labels[y_train[,1]]
+names(y_train) <- c("Activity_Num", "Activity")
+names(subject_train) <- "Subject"
 
 # Column bind data
 train_data <- cbind(as.data.table(subject_train), y_train, X_train)
 
 # Merge the two data sets
-data = rbind(test_data, train_data)
-labels = c("Subject", "Activity_Num", "Activity")
-melt_data_labels = setdiff(colnames(data), labels)
-melt_data = melt(data, id = labels, measure.vars = melt_data_labels)
+data <- rbind(test_data, train_data)
+labels <- c("Subject", "Activity_Num", "Activity")
+melt_data_labels <- setdiff(colnames(data), labels)
+melt_data <- melt(data, id = labels, measure.vars = melt_data_labels)
 
 # Find mean
-tidydata = dcast(melt_data, Subject + Activity ~ variable, mean)
+tidydata <- dcast(melt_data, Subject + Activity ~ variable, mean)
 
 # Output
-write.table(tidydata, file = "./tidydata.txt", row.names = FALSE)
+write.table(tidydata, file <- "./tidydata.txt", row.names <- FALSE)
